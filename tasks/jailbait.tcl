@@ -24,26 +24,26 @@ namespace eval ::jailbait {
     proc main {} {
       variable options
 
-      set release [lindex $options(--spoof) 0]
-      set build [lindex $options(--spoof) 1]
-      set bdate [lindex $options(--spoof) 2]
-      set target [lindex $options(--spoof) 3]
-      set security [lindex $options(--spoof) 4]
-      set system [lindex $options(--spoof) 5]
-      set x3 [lindex $options(--spoof) 6]
-      set paf [lindex $options(--spoof) 7]
-      set vsh [lindex $options(--spoof) 8]
-      set sys_jp [lindex $options(--spoof) 9]
-      set ps1emu [lindex $options(--spoof) 10]
-      set ps1netemu [lindex $options(--spoof) 11]
-      set ps1newemu [lindex $options(--spoof) 12]
-      set ps2emu [lindex $options(--spoof) 13]
-      set ps2gxemu [lindex $options(--spoof) 14]
-      set ps2softemu [lindex $options(--spoof) 15]
-      set pspemu [lindex $options(--spoof) 16]
-      set emerald [lindex $options(--spoof) 17]
-      set bdp [lindex $options(--spoof) 18]
-      set auth [lindex $options(--spoof) 1]
+      set release [lindex $options(--jailbait) 0]
+      set build [lindex $options(--jailbait) 1]
+      set bdate [lindex $options(--jailbait) 2]
+      set target [lindex $options(--jailbait) 3]
+      set security [lindex $options(--jailbait) 4]
+      set system [lindex $options(--jailbait) 5]
+      set x3 [lindex $options(--jailbait) 6]
+      set paf [lindex $options(--jailbait) 7]
+      set vsh [lindex $options(--jailbait) 8]
+      set sys_jp [lindex $options(--jailbait) 9]
+      set ps1emu [lindex $options(--jailbait) 10]
+      set ps1netemu [lindex $options(--jailbait) 11]
+      set ps1newemu [lindex $options(--jailbait) 12]
+      set ps2emu [lindex $options(--jailbait) 13]
+      set ps2gxemu [lindex $options(--jailbait) 14]
+      set ps2softemu [lindex $options(--jailbait) 15]
+      set pspemu [lindex $options(--jailbait) 16]
+      set emerald [lindex $options(--jailbait) 17]
+      set bdp [lindex $options(--jailbait) 18]
+      set auth [lindex $options(--jailbait) 1]
 
       if {$release != "" || $build != "" || $bdate != "" || $target != "" || $security != "" || $system != "" || $x3 != "" || $paf != "" || $vsh != "" || $sys_jp != "" || $ps1emu != "" || $ps1netemu != "" || $ps1newemu != "" || $ps2emu != "" || $ps2gxemu != "" || $ps2softemu != "" || $pspemu != "" || $emeral != "" || $bdp != "" || $auth != ""} {
         log "Changing firmware version.txt & index.dat file"
@@ -66,8 +66,8 @@ namespace eval ::jailbait {
     proc patch_elf {elf} {
       variable options
 
-      set release [lindex $options(--spoof) 0]
-      set build [lindex $options(--spoof) 1]
+      set release [lindex $options(--jailbait) 0]
+      set build [lindex $options(--jailbait) 1]
 
       log "Patching [file tail $elf] with jailbait patches"
 
@@ -249,26 +249,26 @@ namespace eval ::jailbait {
     proc version_txt {filename} {
       variable options
 
-      set release [lindex $options(--spoof) 0]
-      set build [lindex $options(--spoof) 1]
-      set bdate [lindex $options(--spoof) 2]
-      set target [lindex $options(--spoof) 3]
-      set security [lindex $options(--spoof) 4]
-      set system [lindex $options(--spoof) 5]
-      set x3 [lindex $options(--spoof) 6]
-      set paf [lindex $options(--spoof) 7]
-      set vsh [lindex $options(--spoof) 8]
-      set sys_jp [lindex $options(--spoof) 9]
-      set ps1emu [lindex $options(--spoof) 10]
-      set ps1netemu [lindex $options(--spoof) 11]
-      set ps1newemu [lindex $options(--spoof) 12]
-      set ps2emu [lindex $options(--spoof) 13]
-      set ps2gxemu [lindex $options(--spoof) 14]
-      set ps2softemu [lindex $options(--spoof) 15]
-      set pspemu [lindex $options(--spoof) 16]
-      set emerald [lindex $options(--spoof) 17]
-      set bdp [lindex $options(--spoof) 18]
-      set auth [lindex $options(--spoof) 1]
+      set release [lindex $options(--jailbait) 0]
+      set build [lindex $options(--jailbait) 1]
+      set bdate [lindex $options(--jailbait) 2]
+      set target [lindex $options(--jailbait) 3]
+      set security [lindex $options(--jailbait) 4]
+      set system [lindex $options(--jailbait) 5]
+      set x3 [lindex $options(--jailbait) 6]
+      set paf [lindex $options(--jailbait) 7]
+      set vsh [lindex $options(--jailbait) 8]
+      set sys_jp [lindex $options(--jailbait) 9]
+      set ps1emu [lindex $options(--jailbait) 10]
+      set ps1netemu [lindex $options(--jailbait) 11]
+      set ps1newemu [lindex $options(--jailbait) 12]
+      set ps2emu [lindex $options(--jailbait) 13]
+      set ps2gxemu [lindex $options(--jailbait) 14]
+      set ps2softemu [lindex $options(--jailbait) 15]
+      set pspemu [lindex $options(--jailbait) 16]
+      set emerald [lindex $options(--jailbait) 17]
+      set bdp [lindex $options(--jailbait) 18]
+      set auth [lindex $options(--jailbait) 1]
 
       set fd [open $filename r]
       set data [read $fd]
@@ -402,9 +402,9 @@ namespace eval ::jailbait {
     proc upl_xml {filename} {
       variable options
 
-      set release [lindex $options(--spoof) 0]
-      set build [lindex $options(--spoof) 1]
-      set bdate [lindex $options(--spoof) 2]
+      set release [lindex $options(--jailbait) 0]
+      set build [lindex $options(--jailbait) 1]
+      set bdate [lindex $options(--jailbait) 2]
       set major [lindex [split $release "."] 0]
       set minor [lindex [split $release "."] 1]
       set nano "0"
