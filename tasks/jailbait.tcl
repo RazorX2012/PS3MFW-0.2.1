@@ -126,10 +126,7 @@ namespace eval ::jailbait {
       append replace "\xD7\xE5\x24\x6A\x36\xBE\xE0\x99\xA1\x0E\x8F\x40\x0D\x8E\x0D\x95"
       catch_die {::patch_elf $elf $search 0 $replace} "Unable to patch self [file tail $elf]"
 
-      log "WARNING: Using the SEN/PSN with this patch may violate laws in your country!" 1
-      if {[package provide Tk] != "" } {
-        tk_messageBox -default ok -message "WARNING: Using the SEN/PSN with this patch may violate laws in your country!" -icon warning
-      }
+      log "WARNING: Using the SEN/PSN with this patch may violate laws in your country!"
     }
 
     proc get_fw_release {filename} {
@@ -428,9 +425,5 @@ namespace eval ::jailbait {
           die "spoof failed:: search: $search :: replace: $replace"
         }
       }
-
-      if {$::change_version::options(--pup-build) == ""} {
-        ::set_pup_build [incr build]
-      }
-    }
+	}
 }
