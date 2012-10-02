@@ -68,7 +68,7 @@ namespace eval ::patch_lv1 {
         --patch-lv1-dabr-priv-mask true
         --patch-lv1-encdec-ioctl-0x85 true
         --patch-lv1-gpu-4kb-iopage false
-        --patch-lv1-dispmgr-access true
+        --patch-lv1-dispmgr-access false
         --patch-lv1-iimgr-access true
         --patch-lv1-um-extract-pkg true
         --patch-lv1-um-write-eprom-product-mode true
@@ -78,8 +78,8 @@ namespace eval ::patch_lv1 {
         --patch-lv1-gameos-sysmgr-ability true
         --patch-lv1-gameos-gos-mode-one true
         --patch-lv1-storage-skip-acl-check true
-        --patch-lv1-otheros-plus-plus true
-        --patch-lv1-otheros-plus-plus-cold-boot-fix true
+        --patch-lv1-otheros-plus-plus false
+        --patch-lv1-otheros-plus-plus-cold-boot-fix false
         --patch-lv1-coreos-hash-check true
         --patch-lv1-revokelist-hash-check true
         --patch-lv1-patch-productmode-erase true

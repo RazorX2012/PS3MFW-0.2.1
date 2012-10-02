@@ -19,7 +19,7 @@
 namespace eval ::homebrew_category {
 
     array set ::homebrew_category::options {
-        --homebrew-cat "Category"
+        --homebrew-cat "TV"
     }
 
     proc main {} {
