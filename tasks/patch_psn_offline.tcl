@@ -15,12 +15,12 @@
 
 # Option --allow-offline-activation: Patch To Allow Activation of PSN Content Offline
 
-# Type --allow-offline-activation: combobox {{RETAIL 3.41} {RETAIL 3.55} {REBUG 3.41} {REBUG 3.55}}
+# Type --allow-offline-activation: combobox {{RETAIL 3.41} {RETAIL 3.55} {REBUG 3.41} {REBUG 3.55} {CFW 4.XX} {}}
 
 namespace eval ::patch_psn_offline {
 
     array set ::patch_psn_offline::options {
-        --allow-offline-activation "RETAIL 3.55"
+        --allow-offline-activation ""
     }
 
     proc main {} {
@@ -47,6 +47,10 @@ namespace eval ::patch_psn_offline {
             ::modify_devflash_files [file join dev_flash vsh module] $selfs ::patch_psn_offline::patch_355vsh_self
             set selfs {vsh.self.swp}
             ::modify_devflash_files [file join dev_flash vsh module] $selfs ::patch_psn_offline::patch_355swp_self
+		}
+		if {$::patch_psn_offline::options(--allow-offline-activation) == "CFW 4.XX"} {
+            set selfs {vsh.self}
+            ::modify_devflash_files [file join dev_flash vsh module] $selfs ::patch_psn_offline::patch_4xx_self
 		}
 
 	}	
@@ -75,6 +79,9 @@ namespace eval ::patch_psn_offline {
     proc patch_355swp_self {self} {
         ::modify_self_file $self ::patch_psn_offline::patch_355swp_elf
     }
+	proc patch_4xx_self {self} {    
+        ::modify_self_file $self ::patch_psn_offline::patch_4xx_elf
+    }
 
     proc patch_341_elf {elf} {
 		if {$::patch_psn_offline::options(--allow-offline-activation) == "RETAIL 3.41"} {
@@ -83,13 +90,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x305DC4"
             set search "\x4B\xCF\xAF\xB1"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x305824"
             set search "\x48\x31\x43\xAD"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
 			log "WARNING: Running this MFW only ON YOUR OWN RISK" 1
@@ -102,13 +109,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x30B230"
             set search "\x4B\xCF\x5B\x45"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x30AC90"
             set search "\x48\x31\xB4\x65"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
 			log "WARNING: Running this MFW only ON YOUR OWN RISK" 1
@@ -121,13 +128,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x305DC4"
             set search "\x4B\xCF\xAF\xB1"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341cexsp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x305824"
             set search "\x48\x31\x43\xAD"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341cexsp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
     }
@@ -139,13 +146,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x30CEDC"
             set search  "\x4B\xCF\x3E\x99"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341vsh_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x30C93C"
             set search  "\x48\x31\x47\x1D"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341vsh_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
     }
@@ -157,13 +164,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x30CEDC"
             set search  "\x4B\xCF\x3E\x99"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341swp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x30C93C"
             set search  "\x48\x31\x47\x1D"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_341swp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
 			log "WARNING: Running this MFW only ON YOUR OWN RISK" 1
@@ -176,13 +183,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x30B230"
             set search  "\x4B\xCF\x5B\x45"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355cexsp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x30AC90"
             set search  "\x48\x31\xB4\x65"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355cexsp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
     }
@@ -194,13 +201,13 @@ namespace eval ::patch_psn_offline {
 			set offset "0x312308"
             set search  "\x4B\xCE\xEA\x6D"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355vsh_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x311D68"
             set search  "\x48\x31\xB7\xD5"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355vsh_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
     }
@@ -212,15 +219,31 @@ namespace eval ::patch_psn_offline {
 			set offset "0x312308"
             set search  "\x4B\xCE\xEA\x6D"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355swp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
 #           disable deletion of act.dat
 			set offset "0x311D68"
             set search  "\x48\x31\xB7\xD5"
             set replace "\x38\x60\x00\x00"
-            catch_die {::patch_file_multi $elf $search 0 $replace} \
+            catch_die {::patch_355swp_elf $elf $search 0 $replace} \
                 "Unable to patch self [file tail $elf]"
         }
 			log "WARNING: Running this MFW only ON YOUR OWN RISK" 1
     }
+	
+    proc patch_4xx_elf {elf} {
+	if {$::patch_psn_offline::options(--allow-offline-activation) == "CFW 4.XX"} {
+            log "Patching 4.XX CFW [file tail $elf] to allow Offline PSN-Activation"
+#           allow unsigned act.dat         
+            set search "\x4B\xDC\x03\xA9"
+            set replace "\x38\x60\x00\x00"
+            catch_die {::patch_4xx_elf $elf $search 0 $replace} \
+                "Unable to patch self [file tail $elf]"
+#           disable deletion of act.dat         
+            set search "\x48\x3D\x55\x6D"
+            set replace "\x38\x60\x00\x00"
+            catch_die {::patch_4xx_elf $elf $search 0 $replace} \
+                "Unable to patch self [file tail $elf]"
+        }
+	}
 }

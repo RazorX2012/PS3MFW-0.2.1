@@ -8,18 +8,20 @@
 # License ("GPL") version 3, as published by the Free Software Foundation.
 #
 
-# Priority: 1000
-# Description: Add "Homebrew" category to the XMB
+# Modified By RazorX
 
-# Option --homebrew-cat: Category to replace
+# Priority: 1000
+# Description: Add Homebrew Category To The XMB
+
+# Option --homebrew-cat: Category to Replace
     
-# Type --homebrew-cat: combobox {{Users} {Photo} {Music} {Video} {TV} {Game} {Network} {PlayStation® Network} {Friends}}
+# Type --homebrew-cat: combobox {{Photo} {Music} {Video} {TV} {Game} {Friends} {}}
 
 
 namespace eval ::homebrew_category {
 
     array set ::homebrew_category::options {
-        --homebrew-cat "TV"
+        --homebrew-cat ""
     }
 
     proc main {} {
@@ -27,10 +29,6 @@ namespace eval ::homebrew_category {
 		set CATEGORY_GAME_TOOL2_XML [file join dev_flash vsh resource explore xmb category_game_tool2.xml]
 		set EXPLORE_PLUGIN_FULL_RCO [file join dev_flash vsh resource explore_plugin_full.rco]
 		set XMB_INGAME_RCO [file join dev_flash vsh resource xmb_ingame.rco]
-		
-		if {$::homebrew_category::options(--homebrew-cat) == "Users"} {
-		set CATEGORY_XML [file join dev_flash vsh resource explore xmb category_user.xml]
-		}
 		
 		if {$::homebrew_category::options(--homebrew-cat) == "Photo"} {
 		set CATEGORY_XML [file join dev_flash vsh resource explore xmb category_photo.xml]
@@ -52,14 +50,6 @@ namespace eval ::homebrew_category {
 		
 		if {$::homebrew_category::options(--homebrew-cat) == "Game"} {
 		set CATEGORY_XML [file join dev_flash vsh resource explore xmb category_game.xml]
-		}
-		
-		if {$::homebrew_category::options(--homebrew-cat) == "Network"} {
-		set CATEGORY_XML [file join dev_flash vsh resource explore xmb category_network.xml]
-		}
-		
-		if {$::homebrew_category::options(--homebrew-cat) == "PlayStation® Network"} {
-		set CATEGORY_XML [file join dev_flash vsh resource explore xmb category_psn.xml]
 		}
 		
 		if {$::homebrew_category::options(--homebrew-cat) == "Friends"} {

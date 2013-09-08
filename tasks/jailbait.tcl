@@ -7,48 +7,92 @@
 # This software is distributed under the terms of the GNU General Public
 # License ("GPL") version 3, as published by the Free Software Foundation.
 #
+
+# Modified By RazorX
     
-# Priority: 730
-# Description: Jailbait patches to spoof firmware build & version for SEN/PSN access
+# Priority: 202
+# Description: Spoof Firmware Build & Version for SEN/PSN Access
 
-# Option --jailbait: Select firmware version to spoof
-# Type --jailbait: combobox { { 4.21 58071 20120630 0001:CEX-ww 4824@security/sdk_branches/release_421/trunk 49276@sys/sdk_branches/release_421/trunk 16040@x3/branches/target421 6205@paf/branches/target421 90261@vsh/branches/target421 83@sys_jp/branches/target421 8891@emu/branches/target101/ps1 8948@emu/branches/target420/ps1_net 8890@emu/branches/target202/ps1_new 8960@emu/branches/target400/ps2 16578@branches/target400/gx 15529@branches/soft190/soft 8962@emu/branches/target420/psp 3924@emerald/target42x 19089@bdp/prof5/branches/target42x } { 4.25 58730 20120907 0001:CEX-ww 4859@security/sdk_branches/release_425/trunk 49405@sys/sdk_branches/release_425/trunk 16046@x3/branches/target42x 6203@paf/branches/target42x 90897@vsh/branches/target42x 81@sys_jp/branches/target42x 8891@emu/branches/target101/ps1 8948@emu/branches/target420/ps1_net 8890@emu/branches/target202/ps1_new 9029@emu/branches/target400/ps2 16578@branches/target400/gx 15529@branches/soft190/soft 9020@emu/branches/target42x/psp 3924@emerald/target42x 19089@bdp/prof5/branches/target42x } }
+# Option --spoof-label::
+# Option --spoof-label1::
+# Option --spoof-label2::
+# Option --spoof-label3::
+# Option --spoof-label4::
+# Option --spoof: Select Firmware Details
+# Option --cer: Select New CA24.cer
+# Option --cer1: Select New CA27.cer
+# Option --suffix: Add Suffix To The Version (Not Required)
+# Option --spoof-label5::
 
+# Type --spoof-label: label {Version Spoof Section}
+# Type --spoof-label1: label {Space}
+# Type --spoof-label2: label {Info}
+# Type --spoof-label3: label {Info}
+# Type --spoof-label4: label {Space}
+# Type --spoof: combobox { { 4.46 60826 20130620 0001:CEX-ww 5084@security/sdk_branches/release_446/trunk 49873@sys/sdk_branches/release_446/trunk 16147@x3/branches/target44x 6224@paf/branches/target44x 92595@vsh/branches/target44x 86@sys_jp/branches/target44x 9306@emu/branches/target101/ps1 9308@emu/branches/target445/ps1_net 9246@emu/branches/target202/ps1_new 9199@emu/branches/target400/ps2 16862@branches/target400/gx 16770@branches/soft190/soft 9277@emu/branches/target445/psp 3941@emerald/target44x 19898@bdp/prof5/branches/target44x } { 4.25 58730 20120907 0001:CEX-ww 4859@security/sdk_branches/release_425/trunk 49405@sys/sdk_branches/release_425/trunk 16046@x3/branches/target42x 6203@paf/branches/target42x 90897@vsh/branches/target42x 81@sys_jp/branches/target42x 8891@emu/branches/target101/ps1 8948@emu/branches/target420/ps1_net 8890@emu/branches/target202/ps1_new 9029@emu/branches/target400/ps2 16578@branches/target400/gx 15529@branches/soft190/soft 9020@emu/branches/target42x/psp 3924@emerald/target42x 19089@bdp/prof5/branches/target42x } { 4.21 58071 20120630 0001:CEX-ww 4824@security/sdk_branches/release_421/trunk 49276@sys/sdk_branches/release_421/trunk 16040@x3/branches/target421 6205@paf/branches/target421 90261@vsh/branches/target421 83@sys_jp/branches/target421 8891@emu/branches/target101/ps1 8948@emu/branches/target420/ps1_net 8890@emu/branches/target202/ps1_new 8960@emu/branches/target400/ps2 16578@branches/target400/gx 15529@branches/soft190/soft 8962@emu/branches/target420/psp 3924@emerald/target42x 19089@bdp/prof5/branches/target42x } { 3.55 47516 20101127 0001:CEX-ww 4072@security/sdk_branches/release_355/trunk 46573@sys/sdk_branches/release_355/trunk 15614@x3/branches/target35x 6107@paf/branches/target35x 83779@vsh/branches/target35x 69@sys_jp/branches/target35x 6555@emu/branches/target101/ps1 6679@emu/branches/target355/ps1_net 6556@emu/branches/target202/ps1_new 6597@emu/branches/target350/ps2 14473@branches/target355/gx 13474@branches/soft190/soft 6646@emu/branches/target355/psp 3781@emerald/target35x 14948@bdp/prof5/branches/target35x } {} }
+# Type --cer: file open {"SSL Certificate" {cer}}
+# Type --cer1: file open {"SSL Certificate" {cer}}
+# Type --suffix: string
+# Type --spoof-label5: label {Version Spoof Section}
     
 namespace eval ::jailbait {
 
     array set ::jailbait::options {
-      --jailbait "4.25 58730 20120907 0001:CEX-ww 4859@security/sdk_branches/release_425/trunk 49405@sys/sdk_branches/release_425/trunk 16046@x3/branches/target42x 6203@paf/branches/target42x 90897@vsh/branches/target42x 81@sys_jp/branches/target42x 8891@emu/branches/target101/ps1 8948@emu/branches/target420/ps1_net 8890@emu/branches/target202/ps1_new 9029@emu/branches/target400/ps2 16578@branches/target400/gx 15529@branches/soft190/soft 9020@emu/branches/target42x/psp 3924@emerald/target42x 19089@bdp/prof5/branches/target42x"
+	  --spoof-label "--------------------------------- Welcome To The Spoof Section -------------------------------   : :"
+	  --spoof-label1 "                                                                                                                                                    : :"
+	  --spoof-label2 "                 Welcome To The Version Spoof Section Here You Can Change                : :"
+	  --spoof-label3 "                        The Build & Version Of Your CFW For SEN/PSN Access.                      : :"
+	  --spoof-label4 "                                                                                                                                                   : :"
+      --spoof ""
+	  --cer ""
+	  --cer1 ""
+	  --suffix "CFW"
+	  --spoof-label5 "--------------------------------------------------------------------------------------------------------------   : :"
     }
 
     proc main {} {
       variable options
 
-      set release [lindex $options(--jailbait) 0]
-      set build [lindex $options(--jailbait) 1]
-      set bdate [lindex $options(--jailbait) 2]
-      set target [lindex $options(--jailbait) 3]
-      set security [lindex $options(--jailbait) 4]
-      set system [lindex $options(--jailbait) 5]
-      set x3 [lindex $options(--jailbait) 6]
-      set paf [lindex $options(--jailbait) 7]
-      set vsh [lindex $options(--jailbait) 8]
-      set sys_jp [lindex $options(--jailbait) 9]
-      set ps1emu [lindex $options(--jailbait) 10]
-      set ps1netemu [lindex $options(--jailbait) 11]
-      set ps1newemu [lindex $options(--jailbait) 12]
-      set ps2emu [lindex $options(--jailbait) 13]
-      set ps2gxemu [lindex $options(--jailbait) 14]
-      set ps2softemu [lindex $options(--jailbait) 15]
-      set pspemu [lindex $options(--jailbait) 16]
-      set emerald [lindex $options(--jailbait) 17]
-      set bdp [lindex $options(--jailbait) 18]
-      set auth [lindex $options(--jailbait) 1]
+      set release [lindex $options(--spoof) 0]
+      set build [lindex $options(--spoof) 1]
+      set bdate [lindex $options(--spoof) 2]
+      set target [lindex $options(--spoof) 3]
+      set security [lindex $options(--spoof) 4]
+      set system [lindex $options(--spoof) 5]
+      set x3 [lindex $options(--spoof) 6]
+      set paf [lindex $options(--spoof) 7]
+      set vsh [lindex $options(--spoof) 8]
+      set sys_jp [lindex $options(--spoof) 9]
+      set ps1emu [lindex $options(--spoof) 10]
+      set ps1netemu [lindex $options(--spoof) 11]
+      set ps1newemu [lindex $options(--spoof) 12]
+      set ps2emu [lindex $options(--spoof) 13]
+      set ps2gxemu [lindex $options(--spoof) 14]
+      set ps2softemu [lindex $options(--spoof) 15]
+      set pspemu [lindex $options(--spoof) 16]
+      set emerald [lindex $options(--spoof) 17]
+      set bdp [lindex $options(--spoof) 18]
+      set auth [lindex $options(--spoof) 1]
+	  set cerfile [file join dev_flash data cert CA24.cer]
+	  set cerfile1 [file join dev_flash data cert CA27.cer]
+	  set prefix ""
+	  set space " "
+	  set suffix [lindex $options(--suffix)]
+	  
+	  set fd [open [file join ${::CUSTOM_VERSION_TXT}] r]
+      set data [read $fd]
+      close $fd
 
-      if {$release != "" || $build != "" || $bdate != "" || $target != "" || $security != "" || $system != "" || $x3 != "" || $paf != "" || $vsh != "" || $sys_jp != "" || $ps1emu != "" || $ps1netemu != "" || $ps1newemu != "" || $ps2emu != "" || $ps2gxemu != "" || $ps2softemu != "" || $pspemu != "" || $emeral != "" || $bdp != "" || $auth != ""} {
-        log "Changing firmware version.txt & index.dat file"
-        ::modify_devflash_file [file join dev_flash vsh etc version.txt] ::jailbait::version_txt
+      if {$release != "" || $build != "" || $bdate != "" || $target != "" || $security != "" || $system != "" || $x3 != "" || $paf != "" || $vsh != "" || $sys_jp != "" || $ps1emu != "" || $ps1netemu != "" || $ps1newemu != "" || $ps2emu != "" || $ps2gxemu != "" || $ps2softemu != "" || $pspemu != "" || $emerald != "" || $bdp != "" || $auth != ""} {
+        log "Changing Firmware version.txt & index.dat File"
+		::modify_devflash_file [file join dev_flash vsh etc version.txt] ::jailbait::version_txt
       }
+	  if {$suffix != ""} {
+	  set_pup_version "${prefix}${release}${space}${suffix}"
+        ::modify_devflash_file [file join dev_flash vsh etc version.txt] ::jailbait::version_txt
+		} else {
+		set_pup_version "${prefix}${release}${prefix}"
+	  }
       if {$build != "" || $auth != ""} {
         log "Patching vsh.self"
         ::modify_devflash_file [file join dev_flash vsh module vsh.self] ::jailbait::patch_self
@@ -57,6 +101,23 @@ namespace eval ::jailbait {
         log "Patching UPL.xml"
         ::modify_upl_file ::jailbait::upl_xml
       }
+	  
+	  if {[file exists $options(--cer)] == 0 } {
+            log "Skipped Replacing CA24.cer, $options(--cer) File Not Selected"
+        } else {
+            ::modify_devflash_file ${cerfile} ::jailbait::copy_cer_file $::jailbait::options(--cer)
+      }
+	  
+	  if {[file exists $options(--cer1)] == 0 } {
+            log "Skipped Replacing CA27.cer, $options(--cer1) File Not Selected"
+        } else {
+            ::modify_devflash_file ${cerfile1} ::jailbait::copy_cer_file $::jailbait::options(--cer1)
+      }
+	}
+	  
+	proc copy_cer_file { dst src } {
+                log "Replacing Certificate File [file tail $dst] With [file tail $src]"
+                copy_file -force $src $dst
     }
 
     proc patch_self {self} {
@@ -66,10 +127,10 @@ namespace eval ::jailbait {
     proc patch_elf {elf} {
       variable options
 
-      set release [lindex $options(--jailbait) 0]
-      set build [lindex $options(--jailbait) 1]
+      set release [lindex $options(--spoof) 0]
+      set build [lindex $options(--spoof) 1]
 
-      log "Patching [file tail $elf] with jailbait patches"
+      log "Patching [file tail $elf]"
 
       debug "Patching 0x315f50 unlinking of file"
       set search     "\x38\x61\x02\x90\x48\x00\x4d\x35\x60\x00\x00\x00"
@@ -115,7 +176,7 @@ namespace eval ::jailbait {
       set replace "[format %0.2d ${major}].[format %0.2d ${minor}]\x00\x00\0x00\0x00"
       catch_die {::patch_elf $elf $search 8 $replace} "Unable to patch self [file tail $elf]"
 
-      debug "Patching 0x708404 to spoof passphrase"
+      debug "Patching 0x708404 passphrase"
       set search     "\x09\x13\x8F\x12\x48\x4E\xA4\xF0\xD0\x4C\xED\xF4\xB8\x22\x80\xE4"
       append search  "\x3C\xB5\x88\x76\x75\x03\xD5\xEF\xB1\x70\xAA\x19\x4D\x42\x7D\x4F"
       append search  "\xCA\xD8\x6C\x5A\x2B\xE0\xC3\x80\x74\x22\x86\x75\x10\x5D\x40\x99"
@@ -126,7 +187,7 @@ namespace eval ::jailbait {
       append replace "\xD7\xE5\x24\x6A\x36\xBE\xE0\x99\xA1\x0E\x8F\x40\x0D\x8E\x0D\x95"
       catch_die {::patch_elf $elf $search 0 $replace} "Unable to patch self [file tail $elf]"
 
-      log "WARNING: Using the SEN/PSN with this patch may violate laws in your country!"
+      log "WARNING: Using The SEN/PSN With This Patch May Violate Laws In Your Country!"
     }
 
     proc get_fw_release {filename} {
@@ -246,26 +307,26 @@ namespace eval ::jailbait {
     proc version_txt {filename} {
       variable options
 
-      set release [lindex $options(--jailbait) 0]
-      set build [lindex $options(--jailbait) 1]
-      set bdate [lindex $options(--jailbait) 2]
-      set target [lindex $options(--jailbait) 3]
-      set security [lindex $options(--jailbait) 4]
-      set system [lindex $options(--jailbait) 5]
-      set x3 [lindex $options(--jailbait) 6]
-      set paf [lindex $options(--jailbait) 7]
-      set vsh [lindex $options(--jailbait) 8]
-      set sys_jp [lindex $options(--jailbait) 9]
-      set ps1emu [lindex $options(--jailbait) 10]
-      set ps1netemu [lindex $options(--jailbait) 11]
-      set ps1newemu [lindex $options(--jailbait) 12]
-      set ps2emu [lindex $options(--jailbait) 13]
-      set ps2gxemu [lindex $options(--jailbait) 14]
-      set ps2softemu [lindex $options(--jailbait) 15]
-      set pspemu [lindex $options(--jailbait) 16]
-      set emerald [lindex $options(--jailbait) 17]
-      set bdp [lindex $options(--jailbait) 18]
-      set auth [lindex $options(--jailbait) 1]
+      set release [lindex $options(--spoof) 0]
+      set build [lindex $options(--spoof) 1]
+      set bdate [lindex $options(--spoof) 2]
+      set target [lindex $options(--spoof) 3]
+      set security [lindex $options(--spoof) 4]
+      set system [lindex $options(--spoof) 5]
+      set x3 [lindex $options(--spoof) 6]
+      set paf [lindex $options(--spoof) 7]
+      set vsh [lindex $options(--spoof) 8]
+      set sys_jp [lindex $options(--spoof) 9]
+      set ps1emu [lindex $options(--spoof) 10]
+      set ps1netemu [lindex $options(--spoof) 11]
+      set ps1newemu [lindex $options(--spoof) 12]
+      set ps2emu [lindex $options(--spoof) 13]
+      set ps2gxemu [lindex $options(--spoof) 14]
+      set ps2softemu [lindex $options(--spoof) 15]
+      set pspemu [lindex $options(--spoof) 16]
+      set emerald [lindex $options(--spoof) 17]
+      set bdp [lindex $options(--spoof) 18]
+      set auth [lindex $options(--spoof) 1]
 
       set fd [open $filename r]
       set data [read $fd]
@@ -373,7 +434,7 @@ namespace eval ::jailbait {
 
       if {$emerald != [get_fw_emerald $filename]} {
         set emerald_string [lindex [split $emerald ":"] 0]
-        debug "Setting emeral to emerald:${emerald_string}:"
+        debug "Setting emerald to emerald:${emerald_string}:"
         set data [regsub {emerald:(.*?):} $data "emerald:${emerald_string}:"]
       }
 
@@ -396,12 +457,12 @@ namespace eval ::jailbait {
       shell "dat" [file nativename $filename] [file nativename $index_dat]
     }
 
-    proc upl_xml {filename} {
+	proc upl_xml {filename} {
       variable options
 
-      set release [lindex $options(--jailbait) 0]
-      set build [lindex $options(--jailbait) 1]
-      set bdate [lindex $options(--jailbait) 2]
+      set release [lindex $options(--spoof) 0]
+      set build [lindex $options(--spoof) 1]
+      set bdate [lindex $options(--spoof) 2]
       set major [lindex [split $release "."] 0]
       set minor [lindex [split $release "."] 1]
       set nano "0"
@@ -413,7 +474,7 @@ namespace eval ::jailbait {
       if { $search != "" && $search != $replace } {
         set xml [::set_header_key_upl_xml $filename Version "${replace}" Version]
         if { $xml == "" } {
-          die "spoof failed:: search: $search :: replace: $replace"
+          die "jailbait failed:: search: $search :: replace: $replace"
         }
       }
 
@@ -422,8 +483,8 @@ namespace eval ::jailbait {
       if { $search != "" && $search != $replace } {
         set xml [::set_header_key_upl_xml $filename Build "${replace}" Build]
         if { $xml == "" } {
-          die "spoof failed:: search: $search :: replace: $replace"
+          die "jailbait failed:: search: $search :: replace: $replace"
         }
       }
-	}
+    }
 }
